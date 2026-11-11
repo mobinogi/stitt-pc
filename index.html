@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>스팃 PC</title>
+<meta name="description" content="스팃 장부를 PC에서 자세히 보기">
+<meta name="theme-color" content="#1e2a47">
+<link rel="icon" href="./icons/icon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="./icons/icon-180.png">
+  <script type="module" crossorigin src="./assets/index-DE9ad86-.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-sG7bFLyB.css">
+<link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
+<body>
+<script>
+  /* 테마·데이/나잇을 그리기 전에 먼저 입힌다(밝게 떴다가 바뀌는 깜빡임 방지). 규칙은 main.ts '보기 설정'과 같다. */
+  try { var t = localStorage.getItem('stitt_pc_theme'), m = localStorage.getItem('stitt_pc_mode') || 'day';
+    if (t === 'excel') document.body.classList.add('theme-excel');
+    if (m === 'night' || (m === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('night'); } catch (e) {}
+</script>
+<aside>
+  <div class="side-top">
+  <a class="logo" href="https://stitt.kr" target="_blank" rel="noopener" title="stitt.kr">
+    <img class="logo-mini" src="icons/icon-64.png" alt="스팃" width="32" height="32">
+    <svg viewBox="196 151 1721 982" aria-label="스팃">
+      <defs><linearGradient id="sil" x1="0" y1="151" x2="0" y2="1133" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4ccd8"/></linearGradient></defs>
+      <path fill="url(#sil)" d="M 356.82,710.07 L 280.64,609.76 L 533.33,416.82 L 554.76,396.76 L 561.76,384.13 L 564.64,369.38 L 564.95,240.82 L 709.70,240.82 L 709.89,368.63 L 712.89,381.13 L 720.76,394.50 L 754.20,425.19 L 994.01,609.50 L 917.70,709.94 L 683.32,529.69 L 646.20,497.82 L 632.20,497.82 L 607.20,518.82 Z M 1041.63,947.82 L 232.88,947.82 L 232.82,834.88 L 1041.63,834.82 Z M 1597.63,687.69 L 1150.82,687.63 L 1150.88,240.82 L 1574.82,240.88 L 1574.63,353.82 L 1293.82,353.88 L 1294.01,412.82 L 1574.63,412.82 L 1574.82,515.63 L 1294.01,515.69 L 1293.82,573.63 L 1597.63,573.82 Z M 1854.63,798.81 L 1710.82,798.75 L 1710.82,499.25 L 1854.76,389.81 Z M 1800.44,1089.19 L 1595.06,942.94 L 1560.44,914.69 L 1546.06,914.94 L 1511.56,942.94 L 1306.19,1089.19 L 1233.50,987.13 L 1438.69,840.94 L 1459.06,824.07 L 1472.38,809.00 L 1480.88,792.88 L 1481.94,749.82 L 1623.69,749.82 L 1624.63,792.13 L 1633.13,807.50 L 1647.32,823.82 L 1667.94,840.94 L 1873.13,987.13 Z"/>
+      <path fill="#ff0081" d="M 1711.02,188.02 L 1853.98,188.02 L 1853.98,315.46 L 1715.60,420.62 L 1711.02,420.62 Z"/>
+    </svg>
+  </a>
+    <button class="side-fold" id="sideFold" title="메뉴 접기·펼치기 (Ctrl+B)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg></button>
+  </div>
+  <nav class="nav">
+    <a id="navDash" title="대시보드"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span class="nl">대시보드</span></a>
+    <a class="on" id="navSheet" title="거래현황"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 9v11"/></svg><span class="nl">거래현황</span></a>
+    <a id="navLedger" title="거래처 원장"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v16H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M4 20.5A1.5 1.5 0 0 0 5.5 22H19M8 7h7M8 11h5"/></svg><span class="nl">거래처 원장</span></a>
+    <a id="navPledger" title="상품 원장"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg><span class="nl">상품 원장</span></a>
+    <!-- 거래처 등록(2026-11-10 형 "사이드에도") — 화면 이름이 아니라 할 일이라 켜짐 표시는 안 한다. 누르면 거래처 시트 + 등록 판 -->
+    <a id="navAddStore" title="거래처 등록"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 4.5 4h15L21 9.5M3 9.5h18M3 9.5V20h9M9 20v-6h3"/><path d="M18 14v6m-3-3h6"/></svg><span class="nl">거래처 등록</span></a>
+    <a id="navAddProduct" title="상품 등록"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5"/><path d="M3 8l9 5 9-5M12 13v8"/><path d="M18 14v6m-3-3h6"/></svg><span class="nl">상품 등록</span></a>
+    <a data-soon="거래명세표" title="거래명세표 인쇄"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg><span class="nl">거래명세표 인쇄</span></a>
+  </nav>
+  <div class="aside-foot">
+    <!-- 메뉴를 접었을 때만 보이는 장부 파일 아이콘 — 누르면 메뉴가 펼쳐진다 -->
+    <button class="file-mini" id="fileMini" title="장부 파일 보기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></svg></button>
+    <!-- PC에 설치하기 — 브라우저가 '설치할 수 있다'고 알려 줄 때만 보인다(크롬·엣지). 설치한 창 안에선 안 보인다(main.ts) -->
+    <button class="install" id="installBtn" hidden>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 7v5m-2.5-2.5L12 12l2.5-2.5"/></svg>
+      <span><b>PC에 설치하기</b><small>바탕화면에서 바로 열기</small></span>
+    </button>
+    <div class="file">
+      <span class="biz" id="bizName"></span>
+      <b>장부 파일<em class="demoTag">시연</em></b><span><span class="fn" id="fileName"></span><br><span id="fileTime"></span></span>
+      <div class="bookSel one"><select id="bookSel" title="이 파일 안의 다른 사업장"></select></div>
+      <button class="pick" data-pick><svg class="lock" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>새 백업 파일 넣기</button>
+    </div>
+  </div>
+</aside>
+
+<main>
+  <div class="welcome">
+    <div class="in">
+      <h2>폰 장부를 PC에서 크게 봐요</h2>
+      <p class="pub-only">지금은 <b>시연 장부</b>로 둘러볼 수 있어요.<br>내 장부 넣기는 스팃 구독자용으로 곧 열려요.</p>
+      <p class="priv-only">스팃 앱에서 받은 백업 파일을 이 창에 끌어다 놓으세요.<br>장부는 이 PC 안에서만 열려요. 어디로도 보내지 않아요.</p>
+      <div class="steps priv-only">① 폰 스팃 → 환경 설정 → 백업 / 복원 → <b>백업 내보내기</b><br>② 그 파일을 PC로 옮기기(카톡 나에게 보내기·메일 등)<br>③ 여기에 끌어다 놓기</div>
+      <div class="wbtns priv-only"><button class="btn pink" data-pick>백업 파일 고르기</button><button class="btn" data-demo>시연 장부로 둘러보기</button></div>
+      <div class="wbtns pub-only"><button class="btn pink" data-demo>시연 장부로 둘러보기</button><button class="btn lockbtn" data-pick><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>내 백업 파일 넣기</button></div>
+      <small class="priv-only">stitt_backup_날짜.zip(전체) · stitt_사업장_날짜.db(하나) 둘 다 돼요</small>
+    </div>
+  </div>
+
+  <!-- 대시보드(dash/dash.ts) — 왼쪽 메뉴 '대시보드'를 누르면 거래현황 대신 이 판이 보인다 -->
+  <div class="dash" id="dash"></div>
+  <!-- 본 화면 등록 화면(왼쪽 메뉴 '거래처 등록' — clients/form.ts 화면 모드). body.page-on일 때만 보인다 -->
+  <div class="sf-page" id="page"></div>
+  <div class="top">
+    <h1 id="sheetTitle">매출</h1>
+    <div class="seg" id="view">
+      <div class="knob"></div>
+      <button data-v="slip" class="on">전표</button>
+      <button data-v="client">거래처별</button>
+      <button data-v="product">상품별</button>
+      <button data-v="day">일별</button>
+      <button data-v="month">월별</button>
+    </div>
+    <!-- 오른쪽으로 밀기 — 찾기 칸이 원장에서 날짜 옆으로 옮겨 가도 복사·엑셀·설정 단추는 오른쪽 끝 그대로(2026-11-11 형). 예전엔 찾기 칸의 margin-left:auto가 이 일을 했다 -->
+    <span class="topsp"></span>
+    <label class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" placeholder="거래처 · 상품 · 전표번호">
+      <!-- 거래처(상품) 찾기 창 — 이름을 다 몰라도 고르게(2026-11-10 형, 더존 위하고 코드도움처럼). 단축키 F2. ui/finder.ts -->
+      <button class="sbtn" id="findBtn" type="button" title="거래처 찾기 (F2)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h4"/><circle cx="16" cy="14" r="2.5"/><path d="m18 16 2 2"/></svg></button>
+    </label>
+    <!-- 거래처 등록(2026-11-10 형 — 앱 화면 그대로, clients/form.ts). 거래처 시트에서만 보인다(sheet.ts controls) -->
+    <button class="btn" id="addStore"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 4.5 4h15L21 9.5M3 9.5h18M3 9.5V20h9M9 20v-6h3"/><path d="M18 14v6m-3-3h6"/></svg><span>거래처 등록</span></button>
+    <button class="btn" id="addProduct"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5"/><path d="M3 8l9 5 9-5M12 13v8"/><path d="M18 14v6m-3-3h6"/></svg><span>상품 등록</span></button>
+    <button class="btn" id="copyBtn"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="8" y="8" width="12" height="13" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v11A1.5 1.5 0 0 0 5.5 18H8"/></svg><span>선택 복사</span></button>
+    <button class="btn pink" id="xlsx"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" fill="#217346" stroke="#185c37"/><path d="M8 8.5l4 7m0-7l-4 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M14 9h4M14 12h4M14 15h4" stroke="#bfe0cc" stroke-width="1.4" stroke-linecap="round"/></svg><span>엑셀로 받기</span></button>
+    <div class="setwrap">
+      <button class="btn iconbtn" id="setBtn" title="보기 설정" aria-label="보기 설정"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+      <div class="setpop" id="setPop">
+        <div class="hd">보기 설정</div>
+        <div class="setrow">
+          <span class="lbl">테마</span>
+          <div class="seg sm" id="themeSeg"><div class="knob"></div><button data-t="stitt">스팃</button><button data-t="excel">엑셀</button></div>
+        </div>
+        <div class="setrow">
+          <span class="lbl">화면</span>
+          <div class="seg sm" id="modeSeg"><div class="knob"></div><button data-d="day">데이</button><button data-d="night">나잇</button><button data-d="auto">PC 따라</button></div>
+        </div>
+        <div class="setsep"></div>
+        <div class="setrow">
+          <span class="lbl">칸 옮길 때</span>
+          <div class="seg sm" id="dragMode"><div class="knob"></div><button data-m="b">비켜 주기</button><button data-m="a">자리 표시선</button></div>
+        </div>
+        <p class="sethint" id="dragHint"></p>
+      </div>
+    </div>
+  </div>
+  <div class="chips" id="pays">
+    <div class="colwrap"><button class="chip col" id="colBtn">칸<span class="cnt"><span class="in" id="colCnt"></span></span> ▾</button><div class="colpop" id="colPop"></div></div>
+    <span class="div"></span>
+    <div class="seg sm" id="period">
+      <div class="knob"></div>
+      <button data-p="today">오늘</button>
+      <button data-p="week">이번 주</button>
+      <button data-p="month" class="on">이번 달</button>
+      <button data-p="last">지난달</button>
+      <button data-p="year">올해</button>
+      <button data-p="all">전체</button>
+    </div>
+    <button class="range" id="range" title="달력에서 기간 고르기"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4m8-4v4"/></svg><span id="rangeTxt"></span></button>
+    <!-- 원장의 거래처·상품 고르기 배지 — 날짜 바로 옆(2026-11-11 형). 누르면 배지가 길어져 찾기 칸이 되고 목록이 밑으로 펼쳐진다(sheet.ts openPicker) -->
+    <span class="lpwrap" id="ledPickWrap"><span id="lpkBadge"></span><span class="lsslot" id="lsSlot"></span></span>
+    <span class="div"></span>
+    <span id="payChips"></span>
+    <span class="pin" id="pin"></span>
+    <span class="sp"></span>
+    <div class="seg sm hideable" id="qtyMode"><div class="knob"></div><button data-q="ea" class="on">낱개</button><button data-q="box">박스</button></div>
+    <span class="toggle hideable" id="expAll"><span class="sw"></span>품목 다 보기</span>
+  </div>
+  <!-- 엑셀 테마 리본(2026-11-10 형) — 위 두 줄의 버튼을 main.ts(ribbon)가 여기로 옮겨 담는다. 스팃 테마로 가면 제자리로. -->
+  <div class="ribbon" id="ribbon">
+    <div class="rb-top">
+      <div class="rb-tabs" id="rbTabs"></div>
+      <!-- 탭 줄 오른쪽 = 검색·설정(리본을 접어도 쓰게) + 리본 접기 -->
+      <div class="rb-right" id="rbRight"><button class="rb-unfold" id="rbUnfold" title="리본 펼치기 (Ctrl+F1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9.5 12 14.5l7-5"/></svg></button></div>
+    </div>
+    <div class="rb-body">
+      <!-- 엑셀처럼 리본 띠 오른쪽 아래 구석의 작은 접기 버튼 -->
+      <button class="rb-fold" id="rbFold" title="리본 접기 (Ctrl+F1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5 12 9.5l7 5"/></svg></button>
+      <div class="rg" data-g="period"><div class="rg-b"></div><div class="rg-l">기간</div></div>
+      <div class="rg" data-g="pay"><div class="rg-b"></div><div class="rg-l">결제</div></div>
+      <div class="rg" data-g="table"><div class="rg-b"></div><div class="rg-l">표</div></div>
+    </div>
+  </div>
+  <div class="cards" id="cards"></div>
+  <div class="chart off" id="chart">
+    <div class="ch-hd"><b id="chTitle"></b><span class="ch-sub" id="chSub"></span><span class="lg" id="chLegend"></span><button class="ch-fold" id="chFold" title="그래프 접기·펼치기"><span>접기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button></div>
+    <svg id="chSvg" role="img" aria-label="매출 그래프"></svg>
+    <div class="tip" id="tip"></div>
+  </div>
+  <!-- 표 + 오른쪽 거래처 정보 칸(2026-11-10 형, 위하고 전표상세정보처럼 — clients/info.ts). 정보 칸은 거래처 원장·거래처 시트에서만 -->
+  <div class="sheetrow">
+  <div class="sheetcol">
+  <div class="sheet" id="sheet"></div>
+  <div class="bottom">
+    <!-- 엑셀 테마 시트 이동 ‹ › (2026-11-10 형) — 이전·다음 시트로. 스팃 테마에선 숨김 -->
+    <div class="tabnav" id="tabNav"><button data-nav="-1" title="이전 시트"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg></button><button data-nav="1" title="다음 시트"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg></button></div>
+    <div class="tabs" id="tabs">
+      <div class="bar"></div>
+      <button class="on" data-k="sales">매출</button><button data-k="buy">매입</button><button data-k="client">거래처</button><button data-k="product">상품·재고</button><button data-k="recv">미수금</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+  </div>
+  <div class="dpanel" id="dpanel"><div class="ip-hd"><span class="ip-t">거래처 정보</span><button class="ip-fold" id="ipFold" title="접기·펼치기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg></button></div><div class="ip-body" id="ipBody"></div><button class="btn ip-edit" id="ipEdit">거래처 정보 수정</button></div>
+  <!-- 접으면 칸은 오른쪽 밖으로 사라지고 이 손잡이가 '뽁' 튀어나온다(2026-11-11 형). 누르면 다시 펼침 -->
+  <button class="ip-handle" id="ipHandle" title="거래처 정보 펼치기"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg><span>거래처 정보</span></button>
+  </div>
+</main>
+
+<input type="file" id="fileInput" accept=".zip,.db,.stbak,application/zip" hidden>
+<div class="drop">여기에 놓으면 장부를 열어요</div>
+<div class="busy"><div class="in"><span class="dot"></span><span id="busyMsg"></span></div></div>
+<div class="toast" id="toast"></div>
+</body>
+</html>
