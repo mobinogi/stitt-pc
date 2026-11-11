@@ -8,14 +8,15 @@
 <meta name="theme-color" content="#1e2a47">
 <link rel="icon" href="./icons/icon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <script type="module" crossorigin src="./assets/index-B2BqetP2.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-D03zcc8d.css">
+  <script type="module" crossorigin src="./assets/index-rtpfxD54.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C2CEutVA.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <script>
   /* 테마·데이/나잇을 그리기 전에 먼저 입힌다(밝게 떴다가 바뀌는 깜빡임 방지). 규칙은 main.ts '보기 설정'과 같다. */
   try { var t = localStorage.getItem('stitt_pc_theme'), m = localStorage.getItem('stitt_pc_mode') || 'day';
     if (t === 'excel') document.body.classList.add('theme-excel');
+    if (localStorage.getItem('stitt_pc_zebra') !== '0') document.body.classList.add('zebra');   /* 얼룩말 줄 — 처음은 켬 */
     if (m === 'night' || (m === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches)) document.body.classList.add('night'); } catch (e) {}
 </script>
 <aside>
@@ -111,6 +112,10 @@
         <div class="setrow">
           <span class="lbl">화면</span>
           <div class="seg sm" id="modeSeg"><div class="knob"></div><button data-d="day">데이</button><button data-d="night">나잇</button><button data-d="auto">PC 따라</button></div>
+        </div>
+        <div class="setrow">
+          <span class="lbl">줄 칠하기</span>
+          <div class="seg sm" id="zebraSeg"><div class="knob"></div><button data-z="1">켬</button><button data-z="0">끔</button></div>
         </div>
         <div class="setsep"></div>
         <div class="setrow">
