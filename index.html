@@ -8,8 +8,17 @@
 <meta name="theme-color" content="#1e2a47">
 <link rel="icon" href="./icons/icon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <script type="module" crossorigin src="./assets/index-BU4IOgMj.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BY15o0DD.css">
+<script>
+  /* 로그인 화면이 필요하면 장부 화면을 그리기 전부터 가린다(2026-11-12 형 "로그인 화면에서 새로 고침하면 장부 화면이 잠깐 나와").
+     로그인 화면(ui/gate.ts)은 프로그램이 돈 뒤에 덮이고 0.4초 동안 서서히 나타나서, 그 사이 먼저 그려진 장부가 비쳤다.
+     규칙은 gate.ts gateOpen 과 같다(카카오에서 돌아옴 · 통과증 없음/기한 지남 = 로그인 필요). 1 은 빌드 때 바뀐다(진짜판만 '1').
+     가림을 푸는 곳 = gate.ts(안개가 걷히기 시작할 때) · main.ts(바로 들어갈 때) */
+  try { if ('1' === '1') { var gp = JSON.parse(localStorage.getItem('stitt_pc_pass') || 'null');
+    if (/[?&](code|error)=/.test(location.search) || !(gp && gp.exp > Date.now())) document.documentElement.classList.add('gate-wait'); } } catch (e) {}
+</script>
+<style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
+  <script type="module" crossorigin src="./assets/index-Do5bKmQl.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DkpkLHpj.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <script>
