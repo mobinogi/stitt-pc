@@ -16,6 +16,14 @@
   try { if ('1' === '1') { var gp = JSON.parse(localStorage.getItem('stitt_pc_pass') || 'null');
     if (/[?&](code|error)=/.test(location.search) || !(gp && gp.exp > Date.now())) document.documentElement.classList.add('gate-wait'); } } catch (e) {}
   /* 시연판(번호 화면) — 이 창에서 번호를 아직 안 넣었으면 가림. %VITE_GATE% = 번호 해시(시연판만) */
+  /* 설치판 첫 실행 창 크기 = 1576×996(2026-11-13 형 "쪼그라져서 켜진다" → "내가 맞춰 둔 설치판 창이 최적"). 크롬이 처음 설치한 창을 작게 띄운다(창 크기를 정하는 manifest 칸은 없다).
+     값 = 형 PC 설치판 창 바깥 크기(크롬 Preferences app_window_placement, 작업 영역 1920×1032에서 실측). 화면이 더 작으면 작업 영역(작업 표시줄 뺀 곳)까지만.
+     가로는 가운데, 세로는 위에서 조금(형 창 위치 19px). 설치한 창(standalone)에서만 resizeTo 가 먹힌다 — 브라우저 탭은 안 건드림.
+     한 번만(stitt_pc_winfit) — 그 뒤 사장이 직접 바꾸면 크롬이 그 크기를 기억하니 존중 */
+  try { if (matchMedia('(display-mode: standalone)').matches && !localStorage.getItem('stitt_pc_winfit')) {
+    var aw = screen.availWidth, ah = screen.availHeight, ww = Math.min(1576, aw), wh = Math.min(996, ah);
+    moveTo((screen.availLeft || 0) + Math.round((aw - ww) / 2), (screen.availTop || 0) + Math.min(19, ah - wh)); resizeTo(ww, wh);
+    localStorage.setItem('stitt_pc_winfit', '1'); } } catch (e) {}
   try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
