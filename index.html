@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#1e2a47">
 <link rel="icon" href="./icons/icon-64.png" type="image/png">
 <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <script type="module" crossorigin src="./assets/index-DZwUCMK6.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CsMnqamF.css">
+  <script type="module" crossorigin src="./assets/index-Bi5znQCd.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-UsQI2H-n.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <script>
@@ -58,6 +58,8 @@
       <div class="bookSel one"><select id="bookSel" title="이 파일 안의 다른 사업장"></select></div>
       <button class="pick" data-pick><svg class="lock" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>새 백업 파일 넣기</button>
     </div>
+    <!-- 로그아웃(2026-11-12 형 "사이드바에") — 진짜판(로그인 붙은 판)에만. 왼쪽 메뉴 줄과 같은 모양, 접으면 아이콘만. 누르면 확인 뒤 이 PC 장부도 지움(main.ts logout) -->
+    <button class="side-out app-only" id="logoutBtn" title="로그아웃"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span>로그아웃</span></button>
   </div>
 </aside>
 
@@ -123,11 +125,6 @@
           <div class="seg sm" id="dragMode"><div class="knob"></div><button data-m="b">비켜 주기</button><button data-m="a">자리 표시선</button></div>
         </div>
         <p class="sethint" id="dragHint"></p>
-        <div class="setsep app-only"></div>
-        <div class="setrow app-only">
-          <span class="lbl">계정</span>
-          <button class="btn" id="logoutBtn">로그아웃</button>
-        </div>
       </div>
     </div>
   </div>
