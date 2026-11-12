@@ -15,10 +15,12 @@
      가림을 푸는 곳 = gate.ts(안개가 걷히기 시작할 때) · main.ts(바로 들어갈 때) */
   try { if ('1' === '1') { var gp = JSON.parse(localStorage.getItem('stitt_pc_pass') || 'null');
     if (/[?&](code|error)=/.test(location.search) || !(gp && gp.exp > Date.now())) document.documentElement.classList.add('gate-wait'); } } catch (e) {}
+  /* 시연판(번호 화면) — 이 창에서 번호를 아직 안 넣었으면 가림. %VITE_GATE% = 번호 해시(시연판만) */
+  try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
-  <script type="module" crossorigin src="./assets/index-Cp4Ucuy7.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Doi6vgFr.css">
+  <script type="module" crossorigin src="./assets/index-CVIzyxji.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DlPjKp2e.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <script>
