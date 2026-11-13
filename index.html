@@ -27,8 +27,8 @@
   try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
-  <script type="module" crossorigin src="./assets/index-G1FeXbxQ.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DXO_EFqG.css">
+  <script type="module" crossorigin src="./assets/index-tiXTf2JR.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-2lqjVGTJ.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <!-- 설치판 제목줄 없앰 상태에서 창을 끌어 옮기는 띠(styles.css .wco-bar) — 보이지 않음, 누름도 통과 -->
@@ -163,6 +163,8 @@
       <button data-p="year">올해</button>
       <button data-p="all">전체</button>
     </div>
+    <!-- 전년 비교의 기준 해(2026-11-13) — 그 보기에서만 보인다(기간 단추 대신). 단추는 sheet.ts renderYoySeg가 장부 해로 채운다 -->
+    <div class="seg sm gone" id="yoySeg"><div class="knob"></div></div>
     <button class="range" id="range" title="달력에서 기간 고르기"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4m8-4v4"/></svg><span id="rangeTxt"></span></button>
     <!-- 원장의 거래처·상품 고르기 배지 — 날짜 바로 옆(2026-11-11 형). 누르면 배지가 길어져 찾기 칸이 되고 목록이 밑으로 펼쳐진다(sheet.ts openPicker) -->
     <span class="lpwrap" id="ledPickWrap"><span id="lpkBadge"></span><span class="lsslot" id="lsSlot"></span></span>
