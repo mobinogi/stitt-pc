@@ -30,8 +30,8 @@
   try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
-  <script type="module" crossorigin src="./assets/index-InpEieuS.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BOaJg3N_.css">
+  <script type="module" crossorigin src="./assets/index-1I1wVZ1B.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-baNcyrto.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <!-- 설치판 제목줄 없앰 상태에서 창을 끌어 옮기는 띠(styles.css .wco-bar) — 보이지 않음, 누름도 통과 -->
@@ -83,6 +83,8 @@
       <b>장부 파일<em class="demoTag">시연</em></b><span><span class="fn" id="fileName"></span><br><span id="fileTime"></span></span>
       <div class="bookSel one"><select id="bookSel" title="이 파일 안의 다른 사업장"></select></div>
       <button class="pick" data-pick><svg class="lock" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>새 백업 파일 넣기</button>
+      <!-- 동기화 = 폰 [PC로 보내기]로 올라온 장부 받기(2026-11-14, main.ts syncFromPhone) — 로그인 진짜판만 -->
+      <button class="pick login-only" data-sync>동기화</button>
     </div>
     <!-- 로그아웃(2026-11-12 형 "사이드바에") — 진짜판(로그인 붙은 판)에만. 왼쪽 메뉴 줄과 같은 모양, 접으면 아이콘만. 누르면 확인 뒤 이 PC 장부도 지움(main.ts logout) -->
     <button class="side-out app-only" id="logoutBtn" title="로그아웃"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span>로그아웃</span></button>
@@ -96,7 +98,7 @@
       <p class="pub-only">지금은 <b>시연 장부</b>로 둘러볼 수 있어요.<br>내 장부 넣기는 스팃 구독자용으로 곧 열려요.</p>
       <p class="priv-only">스팃 앱에서 받은 백업 파일을 이 창에 끌어다 놓으세요.<br>장부는 이 PC 안에서만 열려요. 어디로도 보내지 않아요.</p>
       <div class="steps priv-only">① 폰 스팃 → 환경 설정 → 백업 / 복원 → <b>백업 내보내기</b><br>② 그 파일을 PC로 옮기기(카톡 나에게 보내기·메일 등)<br>③ 여기에 끌어다 놓기</div>
-      <div class="wbtns priv-only"><button class="btn pink" data-pick>백업 파일 고르기</button><button class="btn" data-demo>시연 장부로 둘러보기</button></div>
+      <div class="wbtns priv-only"><button class="btn pink" data-pick>백업 파일 고르기</button><button class="btn login-only" data-sync>동기화</button><button class="btn" data-demo>시연 장부로 둘러보기</button></div>
       <div class="wbtns pub-only"><button class="btn pink" data-demo>시연 장부로 둘러보기</button><button class="btn lockbtn" data-pick><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>내 백업 파일 넣기</button></div>
       <small class="priv-only">stitt_backup_날짜.zip(전체) · stitt_사업장_날짜.db(하나) 둘 다 돼요</small>
     </div>
