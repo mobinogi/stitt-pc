@@ -30,8 +30,8 @@
   try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
-  <script type="module" crossorigin src="./assets/index-DlvgredM.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-dvwd_uPv.css">
+  <script type="module" crossorigin src="./assets/index-uit0Q3DM.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Dkh_1tpF.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <!-- 설치판 제목줄 없앰 상태에서 창을 끌어 옮기는 띠(styles.css .wco-bar) — 보이지 않음, 누름도 통과 -->
@@ -71,8 +71,16 @@
     <a data-soon="거래명세표" title="거래명세표 인쇄"><i></i><svg class="ni" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg><span class="nl">거래명세표 인쇄</span></a>
   </nav>
   <div class="aside-foot">
-    <!-- 메뉴를 접었을 때만 보이는 장부 파일 아이콘 — 누르면 메뉴가 펼쳐진다 -->
-    <button class="file-mini" id="fileMini" title="장부 파일 보기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></svg></button>
+    <!-- 메뉴를 접었을 때만 보이는 장부 파일 아이콘 — 누르면 메뉴를 펼치지 않고 그 위로 아이콘이 차례로 올라온다(2026-11-15 형 "안 늘리고 아이콘만 뾱뾱", main.ts filePop).
+         마우스를 올리면 회사·파일 이름·받은 시각 말풍선(data-stip). 올라오는 아이콘 = 펼친 메뉴 '장부 파일' 칸의 단추들(같은 data-pick·data-sync 처리를 그대로 탄다) -->
+    <div class="fm-wrap">
+    <div class="fpop" id="filePop">
+      <button class="fp-b" data-pick data-stip="새 백업 파일 넣기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M12 11v6m-3-3h6"/></svg></button>
+      <button class="fp-b login-only" data-sync data-stip="동기화"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16m0 4v-4h-4"/></svg></button>
+      <button class="fp-b" id="fpBook" data-stip="사업장 바꾸기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-5h6v5M9 11h.01M15 11h.01"/></svg></button>
+    </div>
+    <button class="file-mini" id="fileMini" data-stip=""><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h5"/></svg></button>
+    </div>
     <!-- PC에 설치하기 — 브라우저가 '설치할 수 있다'고 알려 줄 때만 보인다(크롬·엣지). 설치한 창 안에선 안 보인다(main.ts) -->
     <button class="install" id="installBtn" hidden>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M12 7v5m-2.5-2.5L12 12l2.5-2.5"/></svg>
