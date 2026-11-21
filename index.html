@@ -30,8 +30,8 @@
   try { if ('1' !== '1' && '%VITE_GATE%'.length === 64 && sessionStorage.getItem('stitt_pc_gate') !== '%VITE_GATE%') document.documentElement.classList.add('gate-wait'); } catch (e) {}
 </script>
 <style>html.gate-wait body>*:not(.gt){visibility:hidden} html.gate-wait body{background:linear-gradient(180deg,#99b0b8 0%,#5a6c86 35%,#262f55 62%,#141420 100%) fixed}  /* 로그인 화면(.gt) 바탕과 같은 색 — 어두웠다 밝아지는 깜빡임 없게 */</style>
-  <script type="module" crossorigin src="./assets/index-CAN7g_Nb.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-4jg8OHtk.css">
+  <script type="module" crossorigin src="./assets/index-lLmJ4fSo.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D3RhWI6a.css">
 <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
 <!-- 설치판 제목줄 없앰 상태에서 창을 끌어 옮기는 띠(styles.css .wco-bar) — 보이지 않음, 누름도 통과 -->
@@ -139,6 +139,8 @@
     <button class="btn" id="addProduct"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5"/><path d="M3 8l9 5 9-5M12 13v8"/><path d="M18 14v6m-3-3h6"/></svg><span>상품 등록</span></button>
     <!-- 견적서·발주서 작성하기(2026-11-13, 2026-11-15 형 "하나로 통합, 엑셀로 받기처럼 색") — 견적서 탭이면 새 견적서, 발주서 탭이면 새 발주서(main.ts). 견적서·발주서 시트에서만(sheet.ts controls) -->
     <button class="btn pink gone" id="newLetter"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M14 3v5h5v5"/><path d="M18 15v6m-3-3h6"/></svg><span>작성하기</span></button>
+    <!-- 변경 내역(2026-11-21, clients/history.ts) — 거래처 시트에서만(sheet.ts controls). 숫자 = 동기화 전 건수 -->
+    <button class="btn" id="histBtn"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg><span>변경 내역</span><b class="hx-n" id="histBtnN"></b></button>
     <button class="btn" id="copyBtn"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="8" y="8" width="12" height="13" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v11A1.5 1.5 0 0 0 5.5 18H8"/></svg><span>선택 복사</span></button>
     <!-- 홈택스 일괄발급 엑셀(2026-11-12 형 — 앱 기능 그대로, ui/hometax.ts). 매출 시트에서만 보인다(sheet.ts controls) -->
     <button class="btn" id="hometax"><svg class="rb-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 11h7M9 14.5h7M9 18h4"/></svg><span>홈택스 일괄발급</span></button>
@@ -217,6 +219,7 @@
     <svg id="chSvg" role="img" aria-label="매출 그래프"></svg>
     <div class="tip" id="tip"></div>
   </div>
+  <div class="hx-tip" id="hxTip"></div>
   <!-- 표 + 오른쪽 거래처 정보 칸(2026-11-10 형, 위하고 전표상세정보처럼 — clients/info.ts). 정보 칸은 거래처 원장·거래처 시트에서만 -->
   <div class="sheetrow">
   <div class="sheetcol">
@@ -234,6 +237,9 @@
   <div class="dpanel" id="dpanel"><div class="ip-hd"><span class="ip-t">거래처 정보</span><button class="ip-fold" id="ipFold" title="접기·펼치기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg></button></div><div class="ip-body" id="ipBody"></div><button class="btn ip-edit" id="ipEdit">거래처 정보 수정</button></div>
   <!-- 접으면 칸은 오른쪽 밖으로 사라지고 이 손잡이가 '뽁' 튀어나온다(2026-11-11 형). 누르면 다시 펼침 -->
   <button class="ip-handle" id="ipHandle" title="거래처 정보 펼치기"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg><span>거래처 정보</span></button>
+  <!-- 변경 내역(2026-11-21 형, clients/history.ts) — 거래처 시트에서만. 거래처 정보 칸과 같은 모양: 닫으면 오른쪽 끝 세로 탭으로 남는다 -->
+  <div class="dpanel hpanel fold" id="hpanel"><div class="ip-hd"><span class="ip-t">변경 내역</span><span class="hx-chip" id="hxChip"><span id="hxChipN"></span><button id="hxChipX" title="전체 보기">✕</button></span><span class="hx-sp"></span><button class="ip-fold" id="hxFold" title="닫기"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg></button></div><div class="hx-list" id="hxList"></div></div>
+  <button class="ip-handle h-handle" id="hxHandle" title="변경 내역 펼치기"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg><span>변경 내역</span><b class="hx-n" id="hxHandleN"></b></button>
   </div>
 </main>
 
